@@ -12,8 +12,14 @@ app.use(express.urlencoded());
 app.use(cors({origin: process.env.REACT_FRONT_PATH}));
 app.use(express.json());
 
-
 const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+      origin:"http://192.168.1.3:45932",
+      methods: ['GET', 'POST']
+    },
+});
+
 
 app.get('/', function(req,res){
     res.json({message:"success"})
