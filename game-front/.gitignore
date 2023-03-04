@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+#images
+/src/views/imgs
+/src/views/townLocatons/images

@@ -1,4 +1,19 @@
-.main--button
+#arena--container
 {
-    display: block;
+    position: absolute;
+    background-image: url("./images/Arena.png");
+    height: 1080px;
+    width: 1920px;
+}
+
+#arena--random
+{
+    top:400px;
+    left:300px;
+}
+
+#arena--bet
+{
+    top: 400px;
+    right: 300px;
 }

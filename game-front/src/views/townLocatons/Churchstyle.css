@@ -1,4 +1,19 @@
-.main--button
+#church--container
 {
-    display: block;
+    position: absolute;
+    background-image: url("./images/Church.png");
+    height: 1080px;
+    width: 1920px;
+}
+
+#church--bless
+{
+    top: 420px;
+    left: 850px;
+}
+
+#church--quest
+{
+    top: 480px;
+    left: 1550px;
 }

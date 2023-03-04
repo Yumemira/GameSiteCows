@@ -1,0 +1,48 @@
+#main--header
+{
+    position: fixed;
+    width: 100%;
+    height: 85px;
+    background-color: rgba(220, 198, 127, 0.95);
+    z-index: 2;
+    border-bottom: 2px solid rgb(235, 116, 69);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-size: 40px;
+}
+
+#button--profile
+{
+    position: relative;
+    display: inline;
+    cursor: pointer;
+    background-color: initial;
+    background-image: url("../imgs/button--name-background.png");
+    background-size: 100% 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    color: black;
+    font-size: 40px;
+    border: none;
+}
+
+#button--profile:hover
+{
+    background-image: url("../imgs/button--name-background-h.png");
+}
+
+#pointer--hp-bar
+{
+    padding-left: 10px;
+    display: inline;
+    color: red;
+}
+
+#pointer--ep-bar
+{
+    padding-left: 10px;
+    display: inline;
+    color: aqua;
+}

@@ -1,0 +1,111 @@
+#login--container
+{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+
+    background-image: url("../townLocatons/images/Town.png");
+}
+
+#login--field
+{
+    position: fixed;
+    width: 90%;
+    height: 90%;
+    left: 5%;
+    top: 5%;
+    background-color: rgba(220, 198, 127, 0.95);
+    z-index: 2;
+    border: 2px solid rgb(235, 116, 69);
+    border-radius: 20px;
+    font-size: 40px;
+}
+
+.input--label
+{
+    position: relative;
+    display: block;
+    margin-left: 50%;
+    margin-top: 3%;
+    transform: translateX(-50%);
+    width: 30%;
+    height: 5%;
+    color: gray;
+}
+
+.input--label span
+{
+    position: absolute;
+
+    cursor: text;
+    pointer-events: none;
+    color: #999;
+    line-height: 17px;
+    margin-left: 2px;
+}
+
+.--visibled
+{
+    visibility: visible;
+}
+
+.--hidden
+{
+    visibility: hidden;
+}
+
+.input--field
+{
+    position: relative;
+    font-size: 40px;
+    color: black;
+    width: 100%;
+    height: 100%;
+    background: none;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+}
+
+.input--field:focus
+{
+    outline:none;
+    border-bottom: 2px solid white;
+}
+
+#attentionLogText
+{
+    width: 100%;
+    height: 40px;
+    text-align:center;
+}
+
+#attentionRegText
+{
+    height: 40px;
+    width: 100%;
+    text-align:center;
+}
+
+.login-menu--button
+{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 40px;
+    background-image: url('../imgs/button--background.png');
+    background-color: initial;
+    background-size: 100% 100%;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-top: 5%;
+    color: black;
+    border: none;
+    border-radius: 5%;
+}
+
+.login-menu--button:hover
+{
+    background-image: url('../imgs/button--background-hover.png');
+}

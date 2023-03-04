@@ -1,4 +1,7 @@
-.main--button
+#tavern--container
 {
-    display: block;
+    position: absolute;
+    background-image: url("./images/Tavern.png");
+    height: 1080px;
+    width: 1920px;
 }

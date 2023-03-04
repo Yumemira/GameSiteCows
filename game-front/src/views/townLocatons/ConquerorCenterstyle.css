@@ -1,4 +1,7 @@
-.main--button
+#conqueror--container
 {
-    display: block;
+    position: absolute;
+    background-image: url("./images/Conqueror.png");
+    height: 1080px;
+    width: 1920px;
 }

@@ -1,4 +1,7 @@
-.main--button
+#smith--container
 {
-    display: block;
+    position: absolute;
+    background-image: url("./images/Smith.png");
+    height: 1080px;
+    width: 1920px;
 }

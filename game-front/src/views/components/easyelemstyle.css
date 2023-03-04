@@ -1,0 +1,9 @@
+.--visibled
+{
+    visibility: visible;
+}
+
+.--hidden
+{
+    visibility: hidden;
+}

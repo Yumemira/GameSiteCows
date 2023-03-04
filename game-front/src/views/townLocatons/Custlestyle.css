@@ -1,0 +1,25 @@
+#custle--container
+{
+    position: absolute;
+    background-image: url("./images/Towncustle.png");
+    height: 1080px;
+    width: 1920px;
+}
+
+#custle--donut
+{
+    top: 330px;
+    left: 1000px;
+}
+
+#custle--quest
+{
+    top: 300px;
+    left: 400px;
+}
+
+#custle--guild
+{
+    top: 450px;
+    left: 1660px;
+}

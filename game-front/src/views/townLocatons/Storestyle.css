@@ -1,0 +1,8 @@
+
+#store--container
+{
+    position: absolute;
+    background-image: url("./images/Store.png");
+    height: 1080px;
+    width: 1920px;
+}
