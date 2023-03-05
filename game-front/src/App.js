@@ -13,15 +13,26 @@ import Surroundings from './views/Surroundings'
 import StoreHouse from './views/townLocatons/Store'
 import NotificationTable from './views/components/notificationContainer'
 import Loginpage from './views/components/loginpage'
+import axios from 'axios'
 
-function retriveConnect()
-{
-  window.location = "/login"
+function prooflogin(){
+  if(localStorage.getItem('id')===null&&window.location.href !=='http://25.73.147.11:45932/login')
+  {
+    window.location = "/login"
+  }
+  else
+  {
+    axios.post('http://25.73.147.11:57159/prooflogin',{id:JSON.parse(localStorage.getItem('id')), loginkey:JSON.parse(localStorage.getItem('login-key'))})
+    .then(res => {
+      if(res.data.message!=="success") window.location = "/login"
+    })
+  }
 }
 
 function App() {
-  let notif = []
-  notif[0] = (
+  prooflogin()
+  
+  return (
     <SocketContext.Provider value={socket}>
       <Router>
         <div className="app-container">
@@ -42,12 +53,6 @@ function App() {
     </Router>
   </SocketContext.Provider>
   )
-  if(localStorage.getItem('id')===null&&window.location.href !=='http://25.73.147.11:45932/login')
-  {
-    notif[1] = <NotificationTable textData="Пожалуйста, сначала войдите в аккаунт!" clickFunc={retriveConnect} />
-  }
-  
-  return notif
 }
 
 export default App

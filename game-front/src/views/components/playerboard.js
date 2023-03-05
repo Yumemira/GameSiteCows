@@ -1,6 +1,7 @@
 import React from "react"
 import './playboardstyle.css'
 import axios from 'axios'
+import Profile from "./playerprofile"
 
 export default class Playerboard extends React.Component
 {
@@ -12,8 +13,22 @@ export default class Playerboard extends React.Component
             pid:props.pid,
             nickname:null,
             hp:0,
-            ep:0
+            ep:0,
+            prof:<></>
         }
+        this.openProile = this.openProile.bind(this)
+        this.closeProfile = this.closeProfile.bind(this)
+    }
+    closeProfile = () => {
+        this.setState({
+            prof:<></>
+        })
+    }
+
+    openProile = () => {
+        this.setState({
+            prof:<Profile pid={this.state.pid} key={`pr`+this.state.pid} pname={this.state.pname} offunc={this.closeProfile} />
+            })
     }
 
     componentDidMount()
@@ -31,7 +46,8 @@ export default class Playerboard extends React.Component
     render()
     {
         return (<section id="main--header">
-            <button id="button--profile">{this.state.nickname}</button>
+            {this.state.prof}
+            <button id="button--profile" onClick={this.openProile}>{this.state.nickname}</button>
             <p id="pointer--hp-bar">{this.state.hp}</p>
             <p id="pointer--ep-bar">{this.state.ep}</p>
             <p id="pointer--premium"></p>
