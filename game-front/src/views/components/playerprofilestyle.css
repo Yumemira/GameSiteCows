@@ -1,17 +1,25 @@
 #profile--container
 {
     position: absolute;
+    padding-top: 50px;
     top:100px;
     background-color:  rgba(220, 198, 127, 0.95);
     width: 90%;
     left: 5%;
     z-index: 3;
+    border: 2px solid rgb(235, 116, 69);
+    border-radius: 10px;
 }
 
 #profile--hide
 {
+    cursor: pointer;
     position: absolute;
-    right: 0px;
+    font-size: 40px;
+    width: 50px;
+    height: 50px;
+    top:5px;
+    right: 5px;
 }
 
 .profile--block
@@ -24,4 +32,46 @@
     background-color:rgba(158, 132, 76, 0.95);
     border-radius: 20px;
     justify-content: space-around;
+}
+
+#profile--button
+{
+    cursor: pointer;
+    background-color: initial;
+    background-image: url("../imgs/button--background.png");
+    background-size: 100% 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 30px;
+    border: none;
+}
+
+#profile--button:hover
+{
+    background-image: url("../imgs/button--background-hover.png");
+}
+
+#profile--text
+{
+    background-image: url("../imgs/button--name-background.png");
+    background-size: 100% 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 30px;
+}
+
+#profile--hide
+{
+    background-color: rgb(255, 115, 0);
+    border: none;
+    border-radius: 20px;
+}
+
+#profile--hide:hover
+{
+    background-color: rgb(255, 77, 0);
 }

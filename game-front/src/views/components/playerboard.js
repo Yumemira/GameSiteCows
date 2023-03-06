@@ -10,7 +10,7 @@ export default class Playerboard extends React.Component
         super(props)
         
         this.state = {
-            pid:props.pid,
+            pid:JSON.parse(localStorage.getItem('id')),
             nickname:null,
             hp:0,
             ep:0,
@@ -27,7 +27,7 @@ export default class Playerboard extends React.Component
 
     openProile = () => {
         this.setState({
-            prof:<Profile pid={this.state.pid} key={`pr`+this.state.pid} pname={this.state.pname} offunc={this.closeProfile} />
+            prof:<Profile pid={this.state.pid} key={`pr`+this.state.pid} pname={this.state.nickname} offunc={this.closeProfile} />
             })
     }
 

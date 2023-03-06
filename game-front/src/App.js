@@ -11,21 +11,27 @@ import SmithHouse from './views/townLocatons/Smith'
 import TavernHouse from './views/townLocatons/Tavern'
 import Surroundings from './views/Surroundings'
 import StoreHouse from './views/townLocatons/Store'
-import NotificationTable from './views/components/notificationContainer'
 import Loginpage from './views/components/loginpage'
 import axios from 'axios'
 
 function prooflogin(){
-  if(localStorage.getItem('id')===null&&window.location.href !=='http://25.73.147.11:45932/login')
+  if(!window.location.href.includes('http://25.73.147.11:45932/login'))
   {
-    window.location = "/login"
-  }
-  else
-  {
-    axios.post('http://25.73.147.11:57159/prooflogin',{id:JSON.parse(localStorage.getItem('id')), loginkey:JSON.parse(localStorage.getItem('login-key'))})
-    .then(res => {
-      if(res.data.message!=="success") window.location = "/login"
-    })
+    if(localStorage.getItem('id')===null)
+    {
+      window.location = "/login"
+    }
+    else
+    {
+      axios.post('http://25.73.147.11:57159/prooflogin',{id:JSON.parse(localStorage.getItem('id')), loginkey:JSON.parse(localStorage.getItem('login-key'))})
+      .then(res => {
+        if(res.data.message!=="success") {
+          localStorage.clear()
+          window.location = "/login?msg=invalidkey"
+        }
+      })
+      .catch(err => console.log(err))
+    }
   }
 }
 

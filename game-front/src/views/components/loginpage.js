@@ -3,17 +3,23 @@ import InputElement from "./easyelem"
 import axios from 'axios'
 import validator from "validator"
 import './loginpagestyle.css'
+import NotificationTable from "./notificationContainer"
 
 export default class Loginpage extends React.Component
 {
     constructor(props)
     {
         super(props)
+        const queryParams = new URLSearchParams(window.location.search)
+
         this.state = {
+            msg:queryParams.get('msg'),
             elem: <Login />,
-            togglebutton:"Регистрация"
+            togglebutton:"Регистрация",
+            notif:<></>
         }
         this.changeState = this.changeState.bind(this)
+        this.closeMessage = this.closeMessage.bind(this)
     }
 
     componentDidMount()
@@ -22,6 +28,24 @@ export default class Loginpage extends React.Component
       {
         window.location = '/town'
       }
+      else if(this.state.msg==="invalidkey")
+      {
+        this.setState({
+          notif:<NotificationTable textData="Ошибка -806(ошибка при верификации аккаунта) Пожалуйста, войдите снова" clickFunc={this.closeMessage} />
+        })
+      }
+      else if(this.state.msg==="leave")
+      {
+        this.setState({
+          notif:<NotificationTable textData="Вы вышли из аккаунта" clickFunc={this.closeMessage} />
+        })
+      }
+    }
+
+    closeMessage = () => {
+      this.setState({
+        notif:<></>
+      })
     }
 
     changeState = () => {
@@ -42,7 +66,9 @@ export default class Loginpage extends React.Component
     }
 
     render(){
+      
         return <main id="login--container">
+          {this.state.notif}
             <div id="login--field">
             {this.state.elem}
             <button className='login-menu--button' onClick={this.changeState}>{this.state.togglebutton}</button>
@@ -77,11 +103,6 @@ class Register extends React.Component
         inlineEdit("attentionRegText", res.data.message)
         if(res.data.success)
         {
-          if(window.confirm("Сохранить данные для входа?"))
-          {
-            localStorage.setItem("cow-bull--prefemail", JSON.stringify(useremail))
-          }
-          
           localStorage.setItem("name", JSON.stringify(username))
           localStorage.setItem("email", JSON.stringify(useremail))
 
@@ -135,26 +156,15 @@ function checkedData(uname, email, pass, repeatpass)
     inlineEdit(fid, "Слишком длинный пароль")
     return false
   }
-
-  let i = 0
-  while(i < uname.length)
+  if(uname.indexOf('<')!==-1||uname.indexOf('>')!==-1||uname.indexOf('{')!==-1||uname.indexOf('}')!==-1||uname.indexOf('$')!==-1)
   {
-    if(uname[i] === "<" || uname[i] === ">")
-    {
-      inlineEdit(fid, "Недопустимый символ в имени")
+    inlineEdit(fid, "Недопустимый символ в имени")
       return false
-    }
-    i++
   }
-  i = 0
-  while(i < email.length)
+  if(email.indexOf('<')!==-1||email.indexOf('>')!==-1||email.indexOf('{')!==-1||email.indexOf('}')!==-1||email.indexOf('$')!==-1)
   {
-    if(email[i] === "<" || email[i] === ">")
-    {
-      inlineEdit(fid, "Недопустимый символ в почте")
+    inlineEdit(fid, "Недопустимый символ в почте")
       return false
-    }
-    i++
   }
   if(uname.length < 3)
   {
@@ -217,22 +227,17 @@ class Login extends React.Component
     }
 
     axios.post('http://25.73.147.11:57159/login',{umail: email,
-      upassword: pass,
-      lkey: JSON.parse(localStorage.getItem("login-key"))
+      upassword: pass
     })
     .then(res => {
       inlineEdit(lgn, res.data.message)
       if(res.data.message === "Успешный вход")
       {
-        if(window.confirm("Сохранить данные для входа?"))
-        {
-          localStorage.setItem("cow-bull--prefemail", JSON.stringify(email))
-        }      
         localStorage.setItem("name", JSON.stringify(res.data.name))
         localStorage.setItem("email", JSON.stringify(email))
         localStorage.setItem("id", JSON.stringify(res.data.uid))
         localStorage.setItem("login-state", JSON.stringify(true))
-        localStorage.setItem("login-key", JSON.stringify(res.data.lkey)) // необходимо изменить позднее в функцию валидации логина
+        localStorage.setItem("login-key", JSON.stringify(res.data.lkey))
 
         window.location = 'town'
     }
