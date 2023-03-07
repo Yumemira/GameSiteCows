@@ -18,6 +18,10 @@ export default class Profile extends React.Component
         this.exitAccount = this.exitAccount.bind(this)
     }
 
+    loadStatistics = () => {
+        window.location = `/statisticsboard?id=${this.state.id}`
+    }
+
     exitAccount = () => {
         localStorage.clear()
         window.location = "login?msg=leave"
@@ -87,7 +91,7 @@ export default class Profile extends React.Component
             {this.state.friendButton}
         </div>
         <div className="profile--block">
-            <button id="profile--button">{this.state.globalStat}</button>
+            <button id="profile--button" onClick={this.loadStatistics}>{this.state.globalStat}</button>
         </div>
         <div className="profile--block">
             <button id="profile--button">{this.state.guild}</button>

@@ -1,18 +1,22 @@
 import axios from "axios"
 import React from "react"
 import ScoreElem from "./Scoreelem"
+import './scorepagestyle.css'
 
 export default class Scorepage extends React.Component
 {
     constructor(props)
     {
+        const queryParams = new URLSearchParams(window.location.search)
+
         super(props)
         this.state = {
-            pid:props.pid,
+            pid:queryParams.get('id'),
             pscore:{},
             score:[],
             sectionpage:[],
-            minId:0
+            minId:0,
+            showmoreb:<></>
         }
 
         this.setScore = this.setScore.bind(this)
@@ -20,6 +24,11 @@ export default class Scorepage extends React.Component
         this.setWins = this.setWins.bind(this)
         this.setLoses = this.setLoses.bind(this)
         this.settingsChange = this.settingsChange.bind(this)
+        this.retAction = this.retAction.bind(this)
+    }
+
+    retAction = () => {
+        window.location = 'town'
     }
 
     setScore = () => {
@@ -52,26 +61,30 @@ export default class Scorepage extends React.Component
 
     settingsChange = (sc) => {
         let max
+        let bottom
         if(sc.length>20)
         {
+            bottom = false
             max = 20
         }
         else
         {
+            bottom = true
             max = sc.length
         }
     
         let score = []
         for(let i = 0; i<max;i++)
         {
-            score.push(<ScoreElem eid={i+1} key={'s'+i} pname={sc[i].name} scoretext={sc[i].score} />)
+            score.push(<ScoreElem eid={i+1} key={'s'+i} pname={sc[i].name} score={sc[i].score} pid={sc[i].id} />)
         }
 
         this.setState(prevState=>({
             minId:max,
             score:sc,
             pscore:sc.find(x => x.id === prevState.pid),
-            sectionpage:score
+            sectionpage:score,
+            showmoreb:bottom?<></>:<button id="score--show-next">Показать ещё</button>
         }))
     }
 
@@ -83,15 +96,18 @@ export default class Scorepage extends React.Component
 
     render()
     {
-        return (<div>
+        return (<div id="score--main">
+            <button className="score--button" id="score--return" onClick={this.retAction}>Вернуться</button>
             <nav id="score--nav">
                 <button className="score--button">Всего очков</button>
                 <button className="score--button">Повержено</button>
                 <button className="score--button">Побед на арене</button>
                 <button className="score--button">Поражений</button>
             </nav>
+
             <section id="score--block">
                 {this.state.sectionpage}
+                {this.state.showmoreb}
             </section>
         </div>)
     }

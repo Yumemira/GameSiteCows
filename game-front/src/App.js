@@ -13,6 +13,8 @@ import Surroundings from './views/Surroundings'
 import StoreHouse from './views/townLocatons/Store'
 import Loginpage from './views/components/loginpage'
 import axios from 'axios'
+import Scorepage from './views/components/Scorepage'
+import Scarecrow from './views/components/fightLocations/noviceFight/scarecrow'
 
 function prooflogin(){
   if(!window.location.href.includes('http://25.73.147.11:45932/login'))
@@ -43,6 +45,9 @@ function App() {
       <Router>
         <div className="app-container">
           <Routes>
+            <Route path='fight-scarecrow' element={<Scarecrow socket={socket} />} />
+            <Route path='statisticsboard' element={<Scorepage />} />
+
             <Route path='login' element={<Loginpage />} />
 
             <Route path='town' element={<Town socket={socket} />} />

@@ -2,4 +2,38 @@
 {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.score--text
+{
+    background-image: url('../imgs/button--name-background.png');
+    background-size: 100% 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: center;
+    min-width: 50px;
+    font-size: 25px;
+}
+
+.score--player
+{
+    cursor: pointer;
+    background-image: url('../imgs/button--background.png');
+    background-color: initial;
+    height: 50px;
+    background-size: 100% 100%;
+    padding-left: 30px;
+    padding-right:30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 25px;
+    border: none;
+}
+
+.score--player:hover
+{
+    background-image: url('../imgs/button--background-hover.png');
 }

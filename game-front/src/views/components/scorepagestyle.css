@@ -1,0 +1,36 @@
+#score--main
+{
+    background-color:  rgb(220, 198, 127);
+}
+
+#score--nav
+{
+    display: flex;
+    justify-content: center;
+}
+
+.score--button
+{
+    cursor: pointer;
+    padding-left: 30px;
+    padding-right:30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 30px;
+    background-color: initial;
+    background-image: url('../imgs/button--background.png');
+    background-size: 100% 100%;
+    border: none;
+}
+
+.score--button:hover
+{
+    background-image: url('../imgs/button--background-hover.png');
+}
+
+#score--return
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
