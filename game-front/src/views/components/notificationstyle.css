@@ -14,7 +14,21 @@
     left: 10%;
     top: 10%;
     background-color: rgba(10,10,10,0.8);
+}
 
+#notif--start
+{
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
+}
+
+#notif--back
+{
+    left: 30%;
+    transform: translateX(-50%);
+    bottom: 10px;
+    
 }
 
 .notification--message
@@ -25,4 +39,89 @@
     text-align: center;
     color: white;
     font-size: 24px;
+}
+
+#notif--main
+{
+    position:fixed;
+
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10,10,10,0.8);
+
+    z-index: 5;
+}
+
+#notif--text
+{
+    position: absolute;
+    color: white;
+    margin-top: 20%;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+.notif--button
+{
+    cursor:pointer;
+    background-color: initial;
+    border: none;
+    font-size: 24px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #000;
+    display: block;
+    position: absolute;
+    background-image: url("../imgs/button--background.png");
+    background-size: 100% 100%;
+    text-decoration: none;
+}
+
+.notif--button:hover
+{
+    background-image: url("../imgs/button--background-hover.png");
+}
+
+.notif-i--label
+{
+    position: relative;
+    display: block;
+    margin-left: 50%;
+    margin-top: 750px;
+    transform: translateX(-50%);
+    width: 30%;
+    height: 5%;
+    color: white;
+}
+
+.notif-i--label span
+{
+    position: absolute;
+    font-size: 30px;
+    cursor: text;
+    pointer-events: none;
+    color: gray;
+    line-height: 17px;
+    margin-left: 2px;
+}
+
+.notif-i--field
+{
+    position: relative;
+    font-size: 40px;
+    color: white;
+    width: 100%;
+    height: 100%;
+    background: none;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+}
+
+.notif-i--field:focus
+{
+    outline:none;
+    border-bottom: 2px solid white;
 }

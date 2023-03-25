@@ -158,7 +158,6 @@ server.listen(port, hostname, () => {
     .then(
         ret => {
             if(ret.length > 0) playerstats = ret
-            console.log(`Всего игроков: ${playerstats.length}||${ret.length}`)
         }
     )
 

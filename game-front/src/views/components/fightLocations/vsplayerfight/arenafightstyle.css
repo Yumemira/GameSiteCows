@@ -40,7 +40,7 @@
     margin-left: 2px;
 }
 
-#fight--main
+#pvp-fight--main
 {
     position: absolute;
     height: 1080px;
@@ -48,7 +48,7 @@
     background-image: url('../../../townLocatons/images/Arena.png');
 }
 
-.fight--button
+.pvp-fight--button
 {
     cursor: pointer;
     background-image: url('../../../imgs/button--background.png');
@@ -63,7 +63,7 @@
     border: none;
 }
 
-.fight--button:hover
+.pvp-fight--button:hover
 {
     background-image: url('../../../imgs/button--background-hover.png');
 }
@@ -73,28 +73,28 @@
     background-image: url('../../../imgs/button--background-hover.png');
 }
 
-#fight--suggest
+#pvp-fight--suggest
 {
     position: absolute;
     top: 800px;
     left: 1250px;
 }
 
-#fight--quit
+#pvp-fight--quit
 {
     position: absolute;
     top:400px;
     left: 1500px;
 }
 
-#fight--items
+#pvp-fight--items
 {
     position: absolute;
     top: 400px;
     left: 250px;
 }
 
-#fight--log
+#pvp-fight--log
 {
     position:absolute;
     top: 10px;

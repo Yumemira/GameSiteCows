@@ -7,3 +7,13 @@
 {
     visibility: hidden;
 }
+
+.log--block
+{
+    display: flex;
+    justify-content:space-around;
+    font-size: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgba(70,70,70,0.7);
+}

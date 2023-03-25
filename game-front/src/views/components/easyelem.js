@@ -36,3 +36,22 @@ export default class InputElement extends React.Component
     </div>);
   }
 }
+
+export class LogElement extends React.Component
+{
+  constructor(props)
+  {
+    super(props)
+    this.state = {
+      text:props.textData,
+      author:props.author
+    }
+
+  }
+  render()
+  {
+    return(<div className="log--block">
+      <p className="log--name">{this.state.author}:</p><p className="log--text">{this.state.text}</p>
+      </div>)
+  }
+}

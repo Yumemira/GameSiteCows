@@ -1,4 +1,5 @@
 import React from "react"
+import InputElement from "./easyelem"
 import './notificationstyle.css'
 
 export default class NotificationTable extends React.Component
@@ -31,5 +32,43 @@ export default class NotificationTable extends React.Component
         </div>):<></>
         }
         </>)
+    }
+}
+
+export class InputNotification extends React.Component
+{
+    constructor(props)
+    {
+        super(props)
+
+        this.state = {
+            text:props.text,
+            bname:props.bname,
+            startfunc:props.startfunc,
+            leavefunc:props.leavefunc,
+            claimb:props.claimb,
+            cancelb:props.closeb
+        }
+        this.start = this.start.bind(this)
+    }
+
+    start = () => {
+        if(!this.state.startfunc())
+        {
+            console.log('not right~')
+            this.setState({
+                text:"Неверное число!"
+            })
+        }
+    }
+
+    render()
+    {
+        return(<section id="notif--main">
+            <p id="notif--text">{this.state.text}</p>
+            <InputElement key='sinp' mclass='notif-i--label' iname='fight--pick' elclass='notif-i--field' buttonName={this.state.bname} />
+            <button id="notif--start" className="notif--button" onClick={this.start}>{this.state.claimb}</button>
+            <button id="notif--back" className="notif--button" onClick={this.state.leavefunc} >{this.state.cancelb}</button>
+        </section>)
     }
 }
