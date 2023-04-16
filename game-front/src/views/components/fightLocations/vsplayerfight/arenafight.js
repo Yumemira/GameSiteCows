@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import './arenafightstyle.css'
 import InputElement from '../../easyelem'
 import NotificationTable from '../../notificationContainer'
+import { SocketContext } from '../../socket'
+import axios from 'axios'
 
+const GameCollection = ({user, room}) => {
+    const socket = useContext(SocketContext)
+
+    useEffect(() => {
+
+    },[socket])
+
+    return (<section id="pvp-fight--log">
+
+    </section>)
+}
 export default class Arenafight extends React.Component
 {   
 
@@ -10,6 +23,7 @@ export default class Arenafight extends React.Component
     {
         super(props)
         this.state = {
+            room:null,
             log:[],
             state:'prepare',
             notif:<></>
@@ -41,6 +55,12 @@ export default class Arenafight extends React.Component
         this.setState({
             notif:(<NotificationTable textData="Ещё не готово!" clickFunc={this.closeNotif} />)
         })
+        axios.post('http://25.73.147.11:46291/arena-fight--game-start',{pid:JSON.parse(localStorage.getItem('id'))})
+        .then(res => {
+            this.setState({
+                room:res.data.room
+            })
+        })
     }
 
 
@@ -48,9 +68,7 @@ export default class Arenafight extends React.Component
     {
         return (<main id="pvp-fight--main">
             {this.state.notif}
-            <section id="pvp-fight--log">
-            {this.state.log}
-            </section>
+            <GameCollection />
             <InputElement key='inpan' mclass='input--label' iname='pvp-fight--suggestion' elclass='input--field' buttonName="Введите текущие приёмы" />
             <button id="pvp-fight--suggest" className="pvp-fight--button" onClick={this.doSuggestion}>{">>"}</button>
             <button id="pvp-fight--quit" className="pvp-fight--button" onClick={this.endgameb} >Сдаться</button>

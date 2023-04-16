@@ -96,20 +96,26 @@ class Register extends React.Component
     if(checkedData(username, useremail, userpassword, userRepeatPassword))
     {
 
-      axios.post('http://25.73.147.11:57159/register',{uname: username,
+      axios.post('http://25.73.147.11:46291/register',{uname: username,
       umail: useremail,
       upassword: userpassword})
       .then((res) => {
         inlineEdit("attentionRegText", res.data.message)
+        console.log(res.data.success)
         if(res.data.success)
         {
-          localStorage.setItem("name", JSON.stringify(username))
-          localStorage.setItem("email", JSON.stringify(useremail))
+          axios.post('http://25.73.147.11:57159/add-new-user-props', {id:res.data.uid, uname:username})
+          .then((ret) => {
+            console.log('here we are')
+            localStorage.setItem("name", JSON.stringify(username))
+            localStorage.setItem("email", JSON.stringify(useremail))
 
-          localStorage.setItem("id", JSON.stringify(res.data.userid))
-          localStorage.setItem("login-state", JSON.stringify(true))
-          localStorage.setItem("login-key", JSON.stringify(res.data.lkey))
-          window.location = 'town'
+            localStorage.setItem("id", JSON.stringify(res.data.uid))
+            localStorage.setItem("login-state", JSON.stringify(true))
+            localStorage.setItem("login-key", JSON.stringify(res.data.lkey))
+            
+            window.location = 'town'
+          })
         }
       })
       .catch(err => console.log(err))
@@ -120,10 +126,10 @@ class Register extends React.Component
     return(
       <section id='register'>
         <p id ="attentionRegText"></p>
-        <InputElement key='mail' mclass='input--label' buttonName='Почта' itype='email' iname='email' elclass='input--field' />
-        <InputElement key='uname' mclass='input--label' buttonName='Имя' itype='text' iname='username' elclass='input--field' />
-        <InputElement key='upass' mclass='input--label' buttonName='Пароль' itype='password' iname='password' elclass='input--field' />
-        <InputElement key='urep' mclass='input--label' buttonName='Повтор пароля' itype='password' iname='repeatPassword' elclass='input--field' />
+        <InputElement key='mail' mclass='r-input--label' buttonName='Почта' itype='email' iname='email' elclass='r-input--field' />
+        <InputElement key='uname' mclass='r-input--label' buttonName='Имя' itype='text' iname='username' elclass='r-input--field' />
+        <InputElement key='upass' mclass='r-input--label' buttonName='Пароль' itype='password' iname='password' elclass='r-input--field' />
+        <InputElement key='urep' mclass='r-input--label' buttonName='Повтор пароля' itype='password' iname='repeatPassword' elclass='r-input--field' />
         <button name="submitForm" className='login-menu--button' onClick={this.getRegistered}> Зарегистрироваться </button>
       </section>
     )
@@ -226,20 +232,38 @@ class Login extends React.Component
       return false
     }
 
-    axios.post('http://25.73.147.11:57159/login',{umail: email,
+    axios.post('http://25.73.147.11:46291/login',{umail: email,
       upassword: pass
     })
     .then(res => {
       inlineEdit(lgn, res.data.message)
+      
       if(res.data.message === "Успешный вход")
       {
-        localStorage.setItem("name", JSON.stringify(res.data.name))
-        localStorage.setItem("email", JSON.stringify(email))
-        localStorage.setItem("id", JSON.stringify(res.data.uid))
-        localStorage.setItem("login-state", JSON.stringify(true))
-        localStorage.setItem("login-key", JSON.stringify(res.data.lkey))
+        if(res.data.state)
+        {
+          axios.post('http://25.73.147.11:57159/add-new-user-props', {id:res.data.uid})
+          .then(ret => {
+            localStorage.setItem("name", JSON.stringify(res.data.name))
+            localStorage.setItem("email", JSON.stringify(email))
+            localStorage.setItem("id", JSON.stringify(res.data.uid))
+            localStorage.setItem("login-state", JSON.stringify(true))
+            localStorage.setItem("login-key", JSON.stringify(res.data.lkey))
+    
+            window.location = 'town'
+          })
+        }
+        else
+        {
+          localStorage.setItem("name", JSON.stringify(res.data.name))
+          localStorage.setItem("email", JSON.stringify(email))
+          localStorage.setItem("id", JSON.stringify(res.data.uid))
+          localStorage.setItem("login-state", JSON.stringify(true))
+          localStorage.setItem("login-key", JSON.stringify(res.data.lkey))
 
-        window.location = 'town'
+          window.location = 'town'
+        }
+
     }
     })
     .catch(err => console.log(err))
@@ -249,8 +273,8 @@ class Login extends React.Component
     return(
       <section id="login">
         <p id="attentionLogText"></p>
-        <InputElement key='mail' mclass='input--label' buttonName='Почта' itype='email' iname='email' elclass='input--field' dValue={JSON.parse(localStorage.getItem("cow-bull--prefemail"))} />
-        <InputElement key='pass' mclass='input--label' buttonName='Пароль' itype='password' iname='password' elclass='input--field' />
+        <InputElement key='mail' mclass='r-input--label' buttonName='Почта' itype='email' iname='email' elclass='r-input--field' dValue={JSON.parse(localStorage.getItem("cow-bull--prefemail"))} />
+        <InputElement key='pass' mclass='r-input--label' buttonName='Пароль' itype='password' iname='password' elclass='r-input--field' />
         <button name="submitForm" className='login-menu--button' onClick={this.getLogining}> Войти </button>
       </section>
     )

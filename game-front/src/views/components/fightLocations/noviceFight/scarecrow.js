@@ -123,7 +123,7 @@ export default class Scarecrow extends React.Component
         if(this.state.pid&&!this.state.started)
         {
             this.setState({started:true})
-            axios.post('http://25.73.147.11:46291/crowscare-game-start',{pid:JSON.parse(localStorage.getItem('id'))})
+            axios.post('http://25.73.147.11:46291/crowscare-game-start', {pid:JSON.parse(localStorage.getItem('id')), pname:JSON.parse(localStorage.getItem('name'))})
             .then(res => {
                 let log = []
                 for(let i = 0; i< res.data.start.length; i++)

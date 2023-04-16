@@ -13,11 +13,9 @@ app.use(express.urlencoded())
 app.use(cors({origin: process.env.REACT_FRONT_PATH}))
 app.use(express.json())
 
-var playerstats = []
 var scorestats = []
 var premStats = []
 var guildstats = []
-var nicknames = []
 
 
 const server = http.createServer(app)
@@ -70,96 +68,31 @@ app.post('/get-uinfo',function(req, res){
   })
 })
 
-app.post("/register",function(req, res){
-    const uname = req.body.uname
-    const umail = req.body.umail
-    const upass = req.body.upassword
-  
-    tools.queryToDbMain("select email from userstable where email = $1 limit 1", [umail])
-    .then((ret) => {
-      if(ret.length === 0)
-      {
-        const unicKey = tools.unicNumGenerator();
-  
-        tools.queryToDbMain(`
-        INSERT INTO userstable (name, email, password, loginkey, state, guild)
-        VALUES ($1,$2,$3,$4, 'o', -1);`, [uname, umail, upass, unicKey])
-        .then(() => {
-          tools.queryToDbMain(`select id from userstable where email = $1 limit 1`,[umail])
-          .then(uret => {
-            let tommorow = tools.addDays(1)
-            tools.queryToDb(`insert into "Player" (id, premium) values($1, $2)`,[uret[0].id, tommorow])
-            tools.queryToDb(`insert into scores (id, name, kill, score, pwpwin, pwplose) values ($1,$2,0,0,0,0)`,[uret[0].id,uname])
-            tools.queryToDb(`insert into "hpBackups" (id, hp, ep) values ($1,50, 50)`,[uret[0].id])
-            scorestats.push({id:uret[0].id, name:uname, kill:0, score:0, pwpwin:0, pwplose:0})
-            playerstats.push({id:uret[0].id,hp:50,ep:50})
-            nicknames.push({id:uret[0].id,name:uname})
-            res.json({message: "Успешная регистрация", lkey: unicKey, success: true, userid: uret[0].id});
-          });
-        })
-      }
-      else
-      {
-        res.json({message: "Эта почта уже занята", success: false});
-      }
-    });
-  });
-
-  app.post('/prooflogin',function(req,res){
-    tools.queryToDbMain(`select loginkey from userstable where id = $1 limit 1`,[req.body.id])
-    .then(ret =>{
-      if(ret.length>0&&ret[0].loginkey===req.body.loginkey) res.json({message:"success"})
-      else res.json({message:"nope"})
-    })
+app.post('/prooflogin',function(req,res){
+  tools.queryToDbMain(`select loginkey from userstable where id = $1 limit 1`,[req.body.id])
+  .then(ret =>{
+    if(ret.length>0&&ret[0].loginkey===req.body.loginkey) res.json({message:"success"})
+    else res.json({message:"nope"})
   })
-  
-  app.post("/login",function(req, res){
-    const umail = req.body.umail;
-    const upass = req.body.upassword;
-  
-    tools.queryToDbMain(`select id, password, loginkey, name from userstable where email = $1 limit 1`, [umail])
-    .then((ret) => {
-      if(ret.length === 0||ret[0].password !== upass)
-      {
-        res.json({message: "Невереный логин или пароль"});
-      }
-      else
-      {
-        tools.queryToDb('select id from "Player" where id=$1 limit 1',[ret[0].id])
-        .then(rety => {
-          if(rety.length===0)
-          {
-            let tommorow = tools.addDays(1)
-            tools.queryToDb(`insert into "Player" (id, premium) values($1, $2)`,[ret[0].id, tommorow])
-            tools.queryToDb(`insert into scores (id,name, kill, score, pwpwin, pwplose) values ($1,$2,0,0,0,0)`,[ret[0].id,ret[0].name])
-            tools.queryToDb(`insert into "hpBackups" (id, hp, ep) values ($1,50, 50)`,[ret[0].id])
-            scorestats.push({id:ret[0].id, name:ret[0].name, kill:0, score:0, pwpwin:0, pwplose:0})
-            playerstats.push({id:ret[0].id,hp:50,ep:50})
-            nicknames.push({id:ret[0].id,name:ret[0].name})
-          }
-        })
-          res.json({uid: ret[0].id, name: ret[0].name, message: "Успешный вход", lkey: ret[0].loginkey});
-      }
-    });
-  });
-
-app.post('/p-stat', function(req,res){
-    res.json({nickname:nicknames.find(x => x.id === req.body.id).name, hp:playerstats.find(x => x.id === req.body.id).hp, ep:playerstats.find(x => x.id === req.body.id).ep})
 })
 
 app.post('/fetch-guild',function(req,res){
   res.json({name:guildstats.find(x => x.id === req.body.id).name})
 })
 
+app.post('/add-new-user-props', function(req,res){
+  if(req.body.id)
+  {
+    let tommorow = tools.addDays(1)
+    tools.queryToDb(`insert into "Player" (id, premium) values($1, $2)`,[req.body.id, tommorow])
+    tools.queryToDb(`insert into scores (id, name, kill, score, pwpwin, pwplose) values ($1,$2,0,0,0,0)`,[req.body.id, req.body.uname])
+    res.json({message:'success'})
+  }
+})
 
 
 server.listen(port, hostname, () => {
-    tools.queryToDb('select * from "hpBackups"')
-    .then(
-        ret => {
-            if(ret.length > 0) playerstats = ret
-        }
-    )
+    
 
     tools.queryToDb(`select * from scores`)
     .then(
@@ -172,12 +105,7 @@ server.listen(port, hostname, () => {
     .then(ret => {
         if(ret.length > 0) premStats = ret
     })
-
-    tools.queryToDbMain('select id, name from userstable')
-    .then(ret => {
-      if(ret.length > 0) nicknames = ret
-    })
-
+    
     tools.queryToDbMain('select * from guild')
     .then(ret => {
       if(ret.length > 0) guildstats = ret

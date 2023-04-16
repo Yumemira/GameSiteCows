@@ -20,7 +20,7 @@ import Arenafight from './views/components/fightLocations/vsplayerfight/arenafig
 function prooflogin(){
   if(!window.location.href.includes('http://25.73.147.11:45932/login'))
   {
-    if(localStorage.getItem('id')===null)
+    if(!localStorage.getItem('id'))
     {
       window.location = "/login"
     }

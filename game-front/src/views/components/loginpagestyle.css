@@ -21,7 +21,7 @@
     font-size: 40px;
 }
 
-.input--label
+.r-input--label
 {
     position: relative;
     display: block;
@@ -33,7 +33,7 @@
     color: gray;
 }
 
-.input--label span
+.r-input--label span
 {
     position: absolute;
 
@@ -54,7 +54,7 @@
     visibility: hidden;
 }
 
-.input--field
+.r-input--field
 {
     position: relative;
     font-size: 40px;
@@ -67,7 +67,7 @@
     border-right: none;
 }
 
-.input--field:focus
+.r-input--field:focus
 {
     outline:none;
     border-bottom: 2px solid white;
