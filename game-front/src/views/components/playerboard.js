@@ -33,8 +33,10 @@ export default class Playerboard extends React.Component
 
     componentDidMount()
     {
-        axios.post('http://25.73.147.11:46291/p-stat',{id:this.state.pid})
+        console.log(this.state.pid)
+        axios.post('http://25.73.147.11:46291/p-stat', {id:this.state.pid})
         .then( res => {
+            console.log(res.data)
             this.setState({
                 nickname:res.data.nickname,
                 hp:res.data.hp,

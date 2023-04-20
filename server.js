@@ -85,7 +85,8 @@ app.post('/add-new-user-props', function(req,res){
   {
     let tommorow = tools.addDays(1)
     tools.queryToDb(`insert into "Player" (id, premium) values($1, $2)`,[req.body.id, tommorow])
-    tools.queryToDb(`insert into scores (id, name, kill, score, pwpwin, pwplose) values ($1,$2,0,0,0,0)`,[req.body.id, req.body.uname])
+    tools.queryToDb(`insert into scores (id, name, kill, score, pwpwin, pwplose) values ($1,$2,0,0,0,0)`,[req.body.id, req.body.name])
+    scorestats.push({id:req.body.id, name:req.body.name, kill:0, score:0, pwpwin:0, pwplose:0})
     res.json({message:'success'})
   }
 })

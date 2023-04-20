@@ -104,7 +104,7 @@ class Register extends React.Component
         console.log(res.data.success)
         if(res.data.success)
         {
-          axios.post('http://25.73.147.11:57159/add-new-user-props', {id:res.data.uid, uname:username})
+          axios.post('http://25.73.147.11:57159/add-new-user-props', {id:res.data.uid, name:username})
           .then((ret) => {
             console.log('here we are')
             localStorage.setItem("name", JSON.stringify(username))
@@ -242,7 +242,7 @@ class Login extends React.Component
       {
         if(res.data.state)
         {
-          axios.post('http://25.73.147.11:57159/add-new-user-props', {id:res.data.uid})
+          axios.post('http://25.73.147.11:57159/add-new-user-props', {id:res.data.uid, name: res.data.name})
           .then(ret => {
             localStorage.setItem("name", JSON.stringify(res.data.name))
             localStorage.setItem("email", JSON.stringify(email))
