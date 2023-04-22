@@ -55,7 +55,6 @@ export class InputNotification extends React.Component
     start = () => {
         if(!this.state.startfunc())
         {
-            console.log('not right~')
             this.setState({
                 text:"Неверное число!"
             })

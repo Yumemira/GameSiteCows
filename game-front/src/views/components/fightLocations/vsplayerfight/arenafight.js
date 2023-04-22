@@ -1,20 +1,38 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './arenafightstyle.css'
 import InputElement from '../../easyelem'
 import NotificationTable from '../../notificationContainer'
 import { SocketContext } from '../../socket'
 import axios from 'axios'
 
-const GameCollection = ({user, room}) => {
+const GameCollection = ({state, user, room}) => {
+    console.log(state)
+    console.log("twice!")
     const socket = useContext(SocketContext)
+    const [waitingElem, setWaiting] = useState(<></>)
 
     useEffect(() => {
+        if(!state)
+        {
+            setWaiting(<div id='bg--waiting'></div>)
+            
+            socket.emit("search_game", {user, room})
+        }
+        else
+        {
+            setWaiting(<div id='bg--waiting'></div>)
+            socket.emit("start_game", {user, room})
+        }
+    }, [])
 
+    useEffect(() => {
+        socket.on("start", (data) => {
+            console.log("starting completed!")
+            setWaiting(<></>)
+        })
     },[socket])
 
-    return (<section id="pvp-fight--log">
-
-    </section>)
+    return waitingElem
 }
 export default class Arenafight extends React.Component
 {   
@@ -23,9 +41,11 @@ export default class Arenafight extends React.Component
     {
         super(props)
         this.state = {
+            statesearch:true,
             room:null,
             log:[],
             state:'prepare',
+            waitnotif:<></>,
             notif:<></>
         }
         this.doSuggestion = this.doSuggestion.bind(this)
@@ -52,13 +72,13 @@ export default class Arenafight extends React.Component
     }
 
     componentDidMount(){
-        this.setState({
-            notif:(<NotificationTable textData="Ещё не готово!" clickFunc={this.closeNotif} />)
-        })
-        axios.post('http://25.73.147.11:46291/arena-fight--game-start',{pid:JSON.parse(localStorage.getItem('id'))})
+        axios.post('http://25.73.147.11:46291/pvp-game-preparation', {userid:JSON.parse(localStorage.getItem('id'))})
         .then(res => {
+            const {state, room} = res.data
             this.setState({
-                room:res.data.room
+                statesearch:state,
+                room:room,
+                waitnotif:<GameCollection state={state} room={room} user={JSON.parse(localStorage.getItem('id'))} />
             })
         })
     }
@@ -68,7 +88,7 @@ export default class Arenafight extends React.Component
     {
         return (<main id="pvp-fight--main">
             {this.state.notif}
-            <GameCollection />
+            {this.state.waitnotif}
             <InputElement key='inpan' mclass='input--label' iname='pvp-fight--suggestion' elclass='input--field' buttonName="Введите текущие приёмы" />
             <button id="pvp-fight--suggest" className="pvp-fight--button" onClick={this.doSuggestion}>{">>"}</button>
             <button id="pvp-fight--quit" className="pvp-fight--button" onClick={this.endgameb} >Сдаться</button>
