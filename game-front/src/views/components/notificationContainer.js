@@ -35,6 +35,39 @@ export default class NotificationTable extends React.Component
     }
 }
 
+export class InputConfirm extends React.Component
+{
+    constructor(props)
+    {
+        super(props)
+
+        this.state = {
+            text:props.textData,
+            confirm:props.clickFunc,
+            cancel:props.cancelb,
+            timer:10
+        }
+
+        setInterval(() => {
+            this.setState(prevState => ({
+                timer:prevState.timer-1
+            }))
+        }, 1000)
+    }
+
+    render(){
+        if(this.state.timer === 0)
+        {
+            this.state.cancel()
+        }
+        return (<section id="notif-t--field">
+            <p id="notif--text">{this.state.text}<span className="color--text">{this.state.timer}</span></p>
+            <button id="notif--confirm" onClick={this.state.confirm}>Принять</button>
+            <button id="notif--cancel" onClick={this.state.cancel}>Отказаться</button>
+        </section>)
+    }
+}
+
 export class InputNotification extends React.Component
 {
     constructor(props)
